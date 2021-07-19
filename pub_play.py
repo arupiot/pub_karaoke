@@ -33,26 +33,36 @@ if DMX:
 scheduler = None
 dmx = None
 ipcon = None
+VIDEO_FILENAME = '/opt/video/Publicani_Assembly_03.mp4'
+AUDIO_VOLUME = '0'
+AUDIO_DEVICE = 'hdmi'
+AUDIO_LAYOUT = '2.1'
 
-if environ['VIDEO_FILENAME'] != '':
-    VIDEO_FILENAME = environ['VIDEO_FILENAME']
-else:
-    VIDEO_FILENAME = '/opt/video/Publicani\ Assembly\ 03.mp4'
+try:
+    if environ['VIDEO_FILENAME'] != '':
+        VIDEO_FILENAME = environ['VIDEO_FILENAME']
+    else:
+        VIDEO_FILENAME = '/opt/video/Publicani_Assembly_03.mp4'
 
-if environ['AUDIO_VOLUME'] != '':
-    AUDIO_VOLUME = environ['AUDIO_VOLUME']
-else:
-    AUDIO_VOLUME = '0'
+    if environ['AUDIO_VOLUME'] != '':
+        AUDIO_VOLUME = environ['AUDIO_VOLUME']
+    else:
+        AUDIO_VOLUME = '0'
 
-if environ['AUDIO_DEVICE'] != '':
-    AUDIO_DEVICE = environ['AUDIO_DEVICE']
-else:
-    AUDIO_DEVICE = 'hdmi' # options: alsa, hdmi
+    if environ['AUDIO_DEVICE'] != '':
+        AUDIO_DEVICE = environ['AUDIO_DEVICE']
+    else:
+        AUDIO_DEVICE = 'hdmi'
+        # options: alsa, hdmi
 
-if environ['AUDIO_LAYOUT'] != '':
-    AUDIO_LAYOUT = environ['AUDIO_LAYOUT']
-else:
-    AUDIO_LAYOUT = '2.1' # options: 2.1, 5.1, 7.1
+    if environ['AUDIO_LAYOUT'] != '':
+        AUDIO_LAYOUT = environ['AUDIO_LAYOUT']
+    else:
+        AUDIO_LAYOUT = '2.1'
+        # options: 2.1, 5.1, 7.1
+except:
+    print("No environment variables")
+
 
 def disco_ball_off():
     print("Disco ball OFF")
@@ -62,7 +72,6 @@ def disco_ball_off():
             dmx.write_frame([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             # dmx.write_frame([0, 0, 255, 0, 0, 0, 255, 255, 0, 0, 100, 0])
         sleep(1)
-
 
 def disco_ball_on():
     print("Disco ball ON")
@@ -94,7 +103,7 @@ if __name__ == "__main__":
 
     disco_ball_off()
 
-    scheduler = BackgroundScheduler()
+    scheduler = BackgroundScheduler({'apscheduler.timezone': 'Europe/Rome'})
     t = timedelta(seconds=50)
     scheduler.add_job(disco_ball_on, 'date', run_date=datetime.now()+t)
     t = timedelta(seconds=4*60+1)

@@ -2,6 +2,6 @@ tinkerforge
 pytz
 apscheduler
 pyfiglet
-pyserial
-pycrypto
-omxplayer-wrapper
+#pyserial
+#pycrypto
+#omxplayer-wrapper
