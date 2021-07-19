@@ -30,6 +30,16 @@ from pytz import utc
 from apscheduler.schedulers.background import BackgroundScheduler
 from os import listdir, system, environ
 from os.path import join, splitext
+import logging
+
+log = logging.getLogger('apscheduler.executors.default')
+log.setLevel(logging.DEBUG)  # INFO
+
+fmt = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
+h = logging.StreamHandler()
+h.setFormatter(fmt)
+log.addHandler(h)
+
 if DMX:
     from tinkerforge.ip_connection import IPConnection
     from tinkerforge.bricklet_dmx import BrickletDMX
@@ -118,6 +128,7 @@ if __name__ == "__main__":
         disco_ball_off()
 
         scheduler = BackgroundScheduler({'apscheduler.timezone': 'Europe/Rome'})
+
         t = timedelta(seconds=50+offset)
         scheduler.add_job(disco_ball_on, 'date', run_date=datetime.now()+t)
         t = timedelta(seconds=4*60+1+offset)

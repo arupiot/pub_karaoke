@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  player:
+    network_mode: host
+    container_name: player
+    image: "arupiot/gopd-audio-play:latest"
+    privileged: true
+    volumes:
+       - /opt/video:/opt/video
+       - /dev/vchiq:/dev/vchiq
+       - /opt/vc:/opt/vc
+    restart: always
+    environment:
+      - AUDIO_VOLUME=-300
+      - AUDIO_DEVICE=both
+      - AUDIO_PATH=/opt/video
+      - AUDIO_EXT=.mp4
+      - AUDIO_LAYOUT=2.1
+    ports:
+       - 4223:4223
+      

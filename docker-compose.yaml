@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  player:
+    network_mode: host
+    container_name: pub-karaoke
+    image: "arupiot/pub-karaoke:latest"
+    privileged: true
+    volumes:
+       - /opt/video:/opt/video
+       - /dev/vchiq:/dev/vchiq
+       - /opt/vc:/opt/vc
+    restart: always
+    environment:
+      - VIDEO_FILENAME=/opt/video/Publicani_Assembly_03.mp4
+      - AUDIO_VOLUME=0
+      - AUDIO_DEVICE=both
+      - AUDIO_LAYOUT=2.1
+      - AUDIO_OFFSET=4
+    ports:
+      - 4223:4223
